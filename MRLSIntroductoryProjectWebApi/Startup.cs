@@ -60,7 +60,7 @@ namespace MRLSIntroductoryProjectWebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddFile("Logs/log-{Date}.txt");
+            loggerFactory.AddFile("Logs/log-{Date}.log");
 
             if (env.IsDevelopment())
             {

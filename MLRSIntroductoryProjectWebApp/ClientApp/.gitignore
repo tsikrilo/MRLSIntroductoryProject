@@ -39,5 +39,4 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Untracked files:
-git rm --cached **/*Logs/*
+*.log
