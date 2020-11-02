@@ -40,4 +40,4 @@ testem.log
 Thumbs.db
 
 # Untracked files:
-Logs/
+git rm --cached **/*Logs/*
