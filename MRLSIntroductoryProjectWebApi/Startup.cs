@@ -38,6 +38,7 @@ namespace MRLSIntroductoryProjectWebApi
                             .AllowAnyHeader();
                     });
             });
+
             var serviceProvider = services.BuildServiceProvider();
             var logger = serviceProvider.GetService<ILogger<User>>();
 
