@@ -149,7 +149,7 @@ publish/
 #!**/packages/repositories.config
 
 
-**/Logs/*
+**/*.log
 
 # Microsoft Azure Build Output
 csx/
