@@ -9,7 +9,7 @@
         <div class="row">
           <div class="col-md-12">
             <input type="text" class="form-control" id="search-text"
-                   aria-describedby="search-text" [(ngModel)]="searchText"
+                   aria-describedby="search-text" name="searchText" [(ngModel)]="searchText"
                    placeholder="Enter full name of user" autofocus>
             <br>
             <table class="table">
@@ -21,7 +21,6 @@
                   <th>Active</th>
                 </tr>
               </thead>
-              <!--              TODO searchText -->
               <tr *ngFor="let ul of users | fullnameFilter: searchText">
                 <td style="cursor:pointer;color:red">
                   <a [routerLink]="['/users', ul.Id]">View user details</a>
