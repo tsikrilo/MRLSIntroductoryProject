@@ -1,10 +1,10 @@
-﻿using MLRSIntroductoryWebApi.DTO;
-using MLRSIntroductoryWebApi.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using MLRSIntroductoryWebApi.DTO;
+using MLRSIntroductoryWebApi.Models;
 
-namespace MLRSIntroductoryWebApi.Data
+namespace MRLSIntroductoryProjectWebApi.Data
 {
     public interface IUserRepository
     {

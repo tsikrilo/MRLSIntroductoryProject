@@ -34,7 +34,7 @@ namespace MLRSIntroductoryWebApi.Service
         /// Updates the user's data with the specified id.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="userDTO">userDTO</param>
+        /// <param name="userDTO">userDTO</param> TODO xml param names are case sensitive
         /// <returns>The updated user.</returns>
         /// <exception cref="System.ArgumentOutOfRangeException">id</exception>
         /// <exception cref="System.ArgumentNullException">user</exception>

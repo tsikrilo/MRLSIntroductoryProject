@@ -1,19 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MLRSIntroductoryWebApi.Controllers;
 using MLRSIntroductoryWebApi.DTO;
 using MLRSIntroductoryWebApi.Models;
 using MLRSIntroductoryWebApi.Service;
 using Moq;
 using System;
 using System.Threading.Tasks;
+using MRLSIntroductoryProjectWebApi.Controllers;
 
 namespace MLSIntroductoryUnitTests
 {
     [TestClass]
     public class MLRSIntroductoryWebApiUnitTest
     {
+        // TODO the user service is the unit to be tested, should not be mocked
         private Mock<IUserService> userServiceMocked;
         private Mock<ILogger> loggerMocked;
         private UsersController _usersController;

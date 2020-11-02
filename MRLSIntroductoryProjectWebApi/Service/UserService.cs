@@ -1,10 +1,10 @@
-﻿using MLRSIntroductoryWebApi.Data;
-using MLRSIntroductoryWebApi.DTO;
+﻿using MLRSIntroductoryWebApi.DTO;
 using MLRSIntroductoryWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MRLSIntroductoryProjectWebApi.Data;
 
 namespace MLRSIntroductoryWebApi.Service
 {
@@ -13,6 +13,7 @@ namespace MLRSIntroductoryWebApi.Service
         private readonly IUserRepository _userRepository;
         public UserService(IUserRepository userRepository)
         {
+            // TODO argument checks
             _userRepository = userRepository;
         }
 
@@ -45,7 +46,7 @@ namespace MLRSIntroductoryWebApi.Service
         /// Updates the user's data with the specified id.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="user">The updated user.</param>
+        /// <param name="user">The updated user.</param> TODO wrong param
         /// <returns></returns>
         /// <exception cref="System.ArgumentOutOfRangeException">id</exception>
         /// <exception cref="System.ArgumentNullException">user</exception>

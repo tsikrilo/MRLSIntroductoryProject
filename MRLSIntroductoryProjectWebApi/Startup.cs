@@ -1,8 +1,4 @@
 using AutoMapper;
-using MLRSIntroductoryWebApi.Data;
-using MLRSIntroductoryWebApi.MappingProfile;
-using MLRSIntroductoryWebApi.Models;
-using MLRSIntroductoryWebApi.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,12 +6,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System.Reflection;
+using MLRSIntroductoryWebApi.Models;
+using MLRSIntroductoryWebApi.Service;
+using MRLSIntroductoryProjectWebApi.Data;
 
 namespace MRLSIntroductoryProjectWebApi
 {
     public class Startup
     {
+        private const string _myAllowAnyOrigin = "_myAllowAnyOrigin";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,25 +25,31 @@ namespace MRLSIntroductoryProjectWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration["ConnectionStrings:UserContext"];
+            services.AddCors(options =>
+            {
+                options.AddPolicy(_myAllowAnyOrigin,
+                    builder =>
+                    {
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                    });
+            });
             var serviceProvider = services.BuildServiceProvider();
             var logger = serviceProvider.GetService<ILogger<User>>();
 
-            services.AddDbContext<UserContext>(o => o.UseSqlServer(connectionString));
 
-            services.AddAutoMapper(typeof(UserMappingProfile).GetTypeInfo().Assembly);
             services.AddSingleton(typeof(ILogger), logger);
+            // TODO use scoped
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserService, UserService>();
-            services.AddControllers().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.PropertyNamingPolicy = null;
-                options.JsonSerializerOptions.DictionaryKeyPolicy = null;
-                options.JsonSerializerOptions.WriteIndented = true;
-            });
+            services.AddAutoMapper(typeof(Startup));
 
-            services.AddCors();
             services.AddControllers();
+
+            services.AddDbContext<UserContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("UserContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,21 +57,14 @@ namespace MRLSIntroductoryProjectWebApi
         {
             loggerFactory.AddFile("Logs/log-{Date}.txt");
 
-            app.UseCors(options =>
-            options.WithOrigins("http://localhost:4200")
-            .AllowAnyMethod()
-            .AllowAnyHeader());
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
+            app.UseCors(_myAllowAnyOrigin);
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

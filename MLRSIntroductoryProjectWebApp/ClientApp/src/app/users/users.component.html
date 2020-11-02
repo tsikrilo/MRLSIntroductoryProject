@@ -21,6 +21,7 @@
                   <th>Active</th>
                 </tr>
               </thead>
+<!--              TODO searchText viewUser not found-->
               <tr *ngFor="let ul of users | fullnameFilter: searchText">
                 <td (click)="viewUser(ul)" style="cursor:pointer;color:red">
                   <a [routerLink]="['/users', ul.Id]">View user details</a>

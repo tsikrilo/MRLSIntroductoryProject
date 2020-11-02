@@ -15,7 +15,7 @@ import { IUserDetail } from '../models/user-detail.model';
 export class UserDetailsComponent implements OnInit {
   form: NgForm;
   userId: number;
-  userModel: IUserDetail | undefined;;
+  userModel: IUserDetail | undefined;
   users: IUserDetail[];
   userTitleList: IUserTitle[];
   userTypeList: IUserType[];

@@ -47,6 +47,7 @@ export class UserService {
   }
 
   getUserList(): Observable<IUserDetail[] | undefined> {
+    // TODO the error handling should not be done here
     return this.http.get<IUserDetail[]>(`${environment.baseUrl}/Users`).pipe(
       catchError(err => {
         console.log('Error retrieving users list', err);

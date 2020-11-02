@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+// TODO cleanup imports
+// TODO fix all namespaces
 namespace MLRSIntroductoryWebApi.DTO
 {
     public class UserDTO

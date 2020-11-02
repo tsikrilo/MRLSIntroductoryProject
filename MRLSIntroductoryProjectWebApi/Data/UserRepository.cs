@@ -1,25 +1,27 @@
-﻿using AutoMapper;
-using MLRSIntroductoryWebApi.DTO;
-using MLRSIntroductoryWebApi.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MLRSIntroductoryWebApi.DTO;
+using MLRSIntroductoryWebApi.Models;
 
-namespace MLRSIntroductoryWebApi.Data
+namespace MRLSIntroductoryProjectWebApi.Data
 {
     public class UserRepository : IUserRepository
     {
-        private UserContext _context;
-        private IMapper _iMapper;
-        public UserRepository(UserContext context, IMapper iMapper)
+        private readonly UserContext _context;
+        private readonly IMapper _mapper;
+        public UserRepository(UserContext context, IMapper mapper)
         {
+            // TODO argument checks
             _context = context;
-            _iMapper = iMapper;
+            _mapper = mapper;
         }
 
+        // TODO xml doc only on interfaces
         /// <summary>
         /// Gets all users.
         /// </summary>
@@ -78,6 +80,7 @@ namespace MLRSIntroductoryWebApi.Data
                 throw new ArgumentOutOfRangeException(nameof(id));
             }
             var user = await _context.User.FindAsync(id);
+            // TODO what if user is not found?
 
             user.IsActive = false;
             _context.Update(user);
@@ -96,6 +99,7 @@ namespace MLRSIntroductoryWebApi.Data
         /// <exception cref="System.ArgumentOutOfRangeException">id</exception>
         /// <exception cref="System.ArgumentNullException">user</exception>
         /// <exception cref="System.NullReferenceException">user modified</exception>
+        // TODO mapping should be done on service
         public async Task<ActionResult<User>> UpdateUser(int id, UserDTO userDto)
         {
             if (id <= 0)
@@ -115,7 +119,7 @@ namespace MLRSIntroductoryWebApi.Data
                 throw new NullReferenceException(nameof(userModified));
             }
 
-            var user = _iMapper.Map<User>(userDto);
+            var user = _mapper.Map<User>(userDto);
 
             userModified.Name = user.Name;
             userModified.Surname = user.Surname;

@@ -1,10 +1,10 @@
-﻿using MLRSIntroductoryWebApi.Models;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using MLRSIntroductoryWebApi.Models;
 
-namespace MLRSIntroductoryWebApi.Controllers
+namespace MRLSIntroductoryProjectWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -12,7 +12,6 @@ namespace MLRSIntroductoryWebApi.Controllers
     {
         private readonly UserContext _context;
 
-        // TODO no reason for anything other than GET methods
         public UserTitlesController(UserContext context)
         {
             _context = context;

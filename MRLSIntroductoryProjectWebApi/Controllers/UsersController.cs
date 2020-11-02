@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MLRSIntroductoryWebApi.DTO;
 using MLRSIntroductoryWebApi.Models;
 using MLRSIntroductoryWebApi.Service;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace MLRSIntroductoryWebApi.Controllers
+namespace MRLSIntroductoryProjectWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -17,11 +17,12 @@ namespace MLRSIntroductoryWebApi.Controllers
         private readonly IUserService _userService;
         public UsersController(IUserService userService, ILogger logger)
         {
-            _logger = logger;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
         // GET: api/Users
+        // TODO xml doc in public controller methods
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
@@ -32,6 +33,7 @@ namespace MLRSIntroductoryWebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
+            // TODO no need for such checks in controller
             if (id <= 0)
             {
                 _logger.LogInformation("Argument userId is less or equal to zero.");
@@ -44,6 +46,7 @@ namespace MLRSIntroductoryWebApi.Controllers
             }
             catch (Exception)
             {
+                // TODO exceptions should be error log
                 _logger.LogInformation("Internal Server Error");
                 return new StatusCodeResult(500);
             }
