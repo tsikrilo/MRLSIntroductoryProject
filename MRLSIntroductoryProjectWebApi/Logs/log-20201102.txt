@@ -205,3 +205,6 @@ System.ArgumentNullException: Value cannot be null. (Parameter 'connectionString
 2020-11-02T13:29:33.5958166+02:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
 2020-11-02T13:29:33.6047306+02:00  [INF] Hosting environment: "Development" (c3307c92)
 2020-11-02T13:29:33.6048944+02:00  [INF] Content root path: "C:\Users\ktsik\source\repos\MRLSIntroductoryProject\MRLSIntroductoryProjectWebApi" (b5d60022)
+2020-11-02T13:42:46.2273086+02:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-02T13:42:46.2358472+02:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-02T13:42:46.2360929+02:00  [INF] Content root path: "C:\Users\ktsik\source\repos\MRLSIntroductoryProject\MRLSIntroductoryProjectWebApi" (b5d60022)
