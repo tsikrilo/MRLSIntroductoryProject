@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -5,19 +6,19 @@ using MLRSIntroductoryWebApi.DTO;
 using MLRSIntroductoryWebApi.Models;
 using MLRSIntroductoryWebApi.Service;
 using Moq;
+using MRLSIntroductoryProjectWebApi.Controllers;
+using MRLSIntroductoryProjectWebApi.Data;
 using System;
 using System.Threading.Tasks;
-using MRLSIntroductoryProjectWebApi.Controllers;
 
 namespace MLSIntroductoryUnitTests
 {
     [TestClass]
     public class MLRSIntroductoryWebApiUnitTest
     {
-        // TODO the user service is the unit to be tested, should not be mocked
-        private Mock<IUserService> userServiceMocked;
-        private Mock<ILogger> loggerMocked;
-        private UsersController _usersController;
+        private UserService _userService;
+        private Mock<IUserRepository> _userRepositoryMocked;
+        private Mock<IMapper> _mapperMocked;
 
         private User user = new User()
         {
@@ -61,8 +62,8 @@ namespace MLSIntroductoryUnitTests
         [TestInitialize]
         public void Setup()
         {
-            userServiceMocked = new Mock<IUserService>(MockBehavior.Strict);
-            loggerMocked = new Mock<ILogger>(MockBehavior.Default);
+            _userRepositoryMocked = new Mock<IUserRepository>(MockBehavior.Strict);
+            _mapperMocked = new Mock<IMapper>(MockBehavior.Default);
         }
 
         /// <summary>
@@ -75,10 +76,10 @@ namespace MLSIntroductoryUnitTests
         public void PostUser_InsertSuccessfully()
         {
             Setup();
-            _usersController = new UsersController(userServiceMocked.Object, loggerMocked.Object);
-            userServiceMocked.Setup(x => x.CreateUser(user)).ReturnsAsync(user);
+            _userService = new UserService(_userRepositoryMocked.Object, _mapperMocked.Object);
+            _userRepositoryMocked.Setup(x => x.InsertUser(user)).ReturnsAsync(user);
 
-            Task<ActionResult<User>> response = _usersController.PostUser(user);
+            Task<ActionResult<User>> response = _userService.CreateUser(user);
             Assert.AreEqual(response.Result.Value.Id, user.Id);
         }
 
@@ -93,11 +94,17 @@ namespace MLSIntroductoryUnitTests
         {
             Setup();
             User nullUser = null;
-            _usersController = new UsersController(userServiceMocked.Object, loggerMocked.Object);
-            userServiceMocked.Setup(x => x.CreateUser(null)).ReturnsAsync(nullUser);
-            var response = await _usersController.PostUser(null);
-
-            Assert.IsInstanceOfType(response.Result, typeof(BadRequestResult));
+            _userService = new UserService(_userRepositoryMocked.Object, _mapperMocked.Object);
+            _userRepositoryMocked.Setup(x => x.InsertUser(null)).ReturnsAsync(nullUser);
+            try
+            {
+                var response = await _userService.CreateUser(null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("user", ex.ParamName);
+            }
         }
 
         /// <summary>
@@ -121,10 +128,10 @@ namespace MLSIntroductoryUnitTests
                 UserTitleId = 1,
                 IsActive = false
             };
-            _usersController = new UsersController(userServiceMocked.Object, loggerMocked.Object);
-            userServiceMocked.Setup(x => x.DisableUser(1)).ReturnsAsync(user);
+            _userService = new UserService(_userRepositoryMocked.Object, _mapperMocked.Object);
+            _userRepositoryMocked.Setup(x => x.DeleteUser(1)).ReturnsAsync(user);
 
-            var response = _usersController.DeleteUser(1);
+            var response = _userService.DisableUser(1);
             Assert.AreEqual(response.Result.Value.IsActive, user.IsActive);
         }
 
@@ -139,11 +146,16 @@ namespace MLSIntroductoryUnitTests
         {
             Setup();
             User nullUser = null;
-            _usersController = new UsersController(userServiceMocked.Object, loggerMocked.Object);
-            userServiceMocked.Setup(x => x.DisableUser(-2)).ReturnsAsync(nullUser);
-
-            var response = await _usersController.DeleteUser(-2);
-            Assert.IsInstanceOfType(response.Result, typeof(BadRequestResult));
+            _userService = new UserService(_userRepositoryMocked.Object, _mapperMocked.Object);
+            _userRepositoryMocked.Setup(x => x.DeleteUser(-2)).ReturnsAsync(nullUser);
+            try
+            {
+                var response = await _userService.DisableUser(-2);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Assert.AreEqual("id", ex.ParamName);
+            }
         }
     }
 }
