@@ -1,20 +1,22 @@
-﻿using MLRSIntroductoryWebApi.DTO;
-using MLRSIntroductoryWebApi.Models;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using MLRSIntroductoryWebApi.DTO;
+using MLRSIntroductoryWebApi.Models;
+using MRLSIntroductoryProjectWebApi.Data;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MRLSIntroductoryProjectWebApi.Data;
 
 namespace MLRSIntroductoryWebApi.Service
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+        private readonly IMapper _mapper;
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
-            // TODO argument checks
-            _userRepository = userRepository;
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         /// <summary>
@@ -46,7 +48,7 @@ namespace MLRSIntroductoryWebApi.Service
         /// Updates the user's data with the specified id.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="user">The updated user.</param> TODO wrong param
+        /// <param name="userDto">The updated user.</param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentOutOfRangeException">id</exception>
         /// <exception cref="System.ArgumentNullException">user</exception>
@@ -77,8 +79,9 @@ namespace MLRSIntroductoryWebApi.Service
             {
                 throw new ArgumentOutOfRangeException(nameof(userDto.EmailAddress));
             }
+            var user = _mapper.Map<User>(userDto);
 
-            return await _userRepository.UpdateUser(id, userDto);
+            return await _userRepository.UpdateUser(id, user);
         }
 
         /// <summary>

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MLRSIntroductoryWebApi.DTO;
 using MLRSIntroductoryWebApi.Models;
 using MLRSIntroductoryWebApi.Service;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MRLSIntroductoryProjectWebApi.Controllers
 {
@@ -22,7 +22,10 @@ namespace MRLSIntroductoryProjectWebApi.Controllers
         }
 
         // GET: api/Users
-        // TODO xml doc in public controller methods
+        /// <summary>
+        /// Gets the users.
+        /// </summary>
+        /// <returns>A list of users</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
@@ -30,93 +33,82 @@ namespace MRLSIntroductoryProjectWebApi.Controllers
         }
 
         // GET: api/Users/5
+        /// <summary>
+        /// Gets the user.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>The user associated with the parameter id</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            // TODO no need for such checks in controller
-            if (id <= 0)
-            {
-                _logger.LogInformation("Argument userId is less or equal to zero.");
-                return BadRequest();
-            }
-
             try
             {
                 return await _userService.FetchUserByID(id);
             }
             catch (Exception)
             {
-                // TODO exceptions should be error log
-                _logger.LogInformation("Internal Server Error");
+                _logger.LogError("Internal Server Error");
                 return new StatusCodeResult(500);
             }
         }
 
         // PUT: api/Users/5
+        /// <summary>
+        /// Puts the user.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="userDto">The user dto.</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult<User>> PutUser([FromRoute] int id, [FromBody] UserDTO userDTO)
         {
-            if (id <= 0)
-            {
-                _logger.LogInformation("Argument id is less or equal to zero.");
-                return BadRequest();
-            }
-
-            if (userDTO is null)
-            {
-                _logger.LogInformation("Argument userDTO is null.");
-                return BadRequest();
-            }
-
             try
             {
                 return await _userService.EditUser(id, userDTO);
             }
             catch (Exception)
             {
-                _logger.LogInformation("Internal Server Error");
+                _logger.LogError("Internal Server Error");
                 return new StatusCodeResult(500);
             }
         }
 
         // POST: api/Users
+        /// <summary>
+        /// Posts the user.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns>The user which is created</returns>
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-            if (user is null)
-            {
-                _logger.LogInformation("Argument user is null.");
-                return BadRequest();
-            }
-
             try
             {
                 return await _userService.CreateUser(user);
             }
             catch (Exception)
             {
-                _logger.LogInformation("Internal Server Error");
+                _logger.LogError("Internal Server Error");
                 return new StatusCodeResult(500);
             }
         }
 
         // DELETE: api/Users/5
+        /// <summary>
+        /// Deletes the user.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<User>> DeleteUser(int id)
         {
-            if (id <= 0)
-            {
-                _logger.LogInformation("Argument id is less or equal to zero.");
-                return BadRequest();
-            }
-
             try
             {
                 return await _userService.DisableUser(id);
             }
             catch (Exception)
             {
-                _logger.LogInformation("Internal Server Error");
+                _logger.LogError("Internal Server Error");
                 return new StatusCodeResult(500);
             }
         }

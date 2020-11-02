@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using MLRSIntroductoryWebApi.DTO;
+﻿using Microsoft.AspNetCore.Mvc;
 using MLRSIntroductoryWebApi.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MRLSIntroductoryProjectWebApi.Data
 {
@@ -42,11 +41,11 @@ namespace MRLSIntroductoryProjectWebApi.Data
         /// Updates the user's data with the specified id.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="userDto">The updated user.</param>
+        /// <param name="user">The updated user.</param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentOutOfRangeException">id</exception>
         /// <exception cref="System.ArgumentNullException">user</exception>
         /// <exception cref="System.NullReferenceException">user modified</exception>
-        Task<ActionResult<User>> UpdateUser(int i, UserDTO userDto);
+        Task<ActionResult<User>> UpdateUser(int i, User user);
     }
 }

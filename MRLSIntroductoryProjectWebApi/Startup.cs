@@ -6,9 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MLRSIntroductoryWebApi.MappingProfile;
 using MLRSIntroductoryWebApi.Models;
 using MLRSIntroductoryWebApi.Service;
 using MRLSIntroductoryProjectWebApi.Data;
+using System.Reflection;
 
 namespace MRLSIntroductoryProjectWebApi
 {
@@ -39,17 +41,19 @@ namespace MRLSIntroductoryProjectWebApi
             var serviceProvider = services.BuildServiceProvider();
             var logger = serviceProvider.GetService<ILogger<User>>();
 
-
             services.AddSingleton(typeof(ILogger), logger);
-            // TODO use scoped
-            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddTransient<IUserService, UserService>();
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                options.JsonSerializerOptions.DictionaryKeyPolicy = null;
+            });
 
             services.AddDbContext<UserContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("UserContext")));
+               options.UseSqlServer(Configuration.GetConnectionString("UserContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

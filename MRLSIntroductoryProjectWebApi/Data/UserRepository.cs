@@ -1,12 +1,11 @@
-﻿using System;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MLRSIntroductoryWebApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MLRSIntroductoryWebApi.DTO;
-using MLRSIntroductoryWebApi.Models;
 
 namespace MRLSIntroductoryProjectWebApi.Data
 {
@@ -16,27 +15,15 @@ namespace MRLSIntroductoryProjectWebApi.Data
         private readonly IMapper _mapper;
         public UserRepository(UserContext context, IMapper mapper)
         {
-            // TODO argument checks
-            _context = context;
-            _mapper = mapper;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper)); ;
         }
 
-        // TODO xml doc only on interfaces
-        /// <summary>
-        /// Gets all users.
-        /// </summary>
-        /// <returns>A list of users</returns>
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return await _context.User.ToListAsync();
         }
 
-        /// <summary>
-        /// Gets the user by identifier.
-        /// </summary>
-        /// <param name="userId">The user identifier.</param>
-        /// <returns>The user which has the specified id</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">userId</exception>
         public async Task<ActionResult<User>> GetUserByID(int userId)
         {
             if (userId <= 0)
@@ -49,12 +36,6 @@ namespace MRLSIntroductoryProjectWebApi.Data
             return await user;
         }
 
-        /// <summary>
-        /// Creates a new user.
-        /// </summary>
-        /// <param name="user">The user.</param>
-        /// <returns>The created user</returns>
-        /// <exception cref="System.ArgumentNullException">user</exception>
         public async Task<ActionResult<User>> InsertUser(User user)
         {
             if (user is null)
@@ -67,12 +48,6 @@ namespace MRLSIntroductoryProjectWebApi.Data
             return await _context.User.FindAsync(user.Id);
         }
 
-        /// <summary>
-        /// Deletes the user.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns>The deleted user</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">id</exception>
         public async Task<ActionResult<User>> DeleteUser(int id)
         {
             if (id <= 0)
@@ -80,7 +55,11 @@ namespace MRLSIntroductoryProjectWebApi.Data
                 throw new ArgumentOutOfRangeException(nameof(id));
             }
             var user = await _context.User.FindAsync(id);
-            // TODO what if user is not found?
+
+            if (user is null)
+            {
+                throw new NullReferenceException(nameof(user));
+            }
 
             user.IsActive = false;
             _context.Update(user);
@@ -90,26 +69,16 @@ namespace MRLSIntroductoryProjectWebApi.Data
             return await _context.User.FindAsync(user.Id);
         }
 
-        /// <summary>
-        /// Updates the user's data with the specified id.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <param name="userDto">userDTO</param>
-        /// <returns>The updated user.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">id</exception>
-        /// <exception cref="System.ArgumentNullException">user</exception>
-        /// <exception cref="System.NullReferenceException">user modified</exception>
-        // TODO mapping should be done on service
-        public async Task<ActionResult<User>> UpdateUser(int id, UserDTO userDto)
+        public async Task<ActionResult<User>> UpdateUser(int id, User user)
         {
             if (id <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(id));
             }
 
-            if (userDto is null)
+            if (user is null)
             {
-                throw new ArgumentNullException(nameof(userDto));
+                throw new ArgumentNullException(nameof(user));
             }
 
             var userModified = await _context.User.SingleOrDefaultAsync(x => x.Id == id);
@@ -118,8 +87,6 @@ namespace MRLSIntroductoryProjectWebApi.Data
             {
                 throw new NullReferenceException(nameof(userModified));
             }
-
-            var user = _mapper.Map<User>(userDto);
 
             userModified.Name = user.Name;
             userModified.Surname = user.Surname;

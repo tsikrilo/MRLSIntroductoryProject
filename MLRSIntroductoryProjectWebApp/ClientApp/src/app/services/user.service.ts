@@ -3,8 +3,7 @@ import { IUserDetail } from '../models/user-detail.model';
 import { HttpClient } from '@angular/common/http';
 import { IUserTitle } from '../models/user-title.model';
 import { IUserType } from '../models/user-type.model';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -17,69 +16,33 @@ export class UserService {
   postUserDetail(userDetail: IUserDetail) {
     userDetail.UserTitleId = +userDetail.UserTitleId;
     userDetail.UserTypeId = +userDetail.UserTypeId;
-    return this.http.post(`${environment.baseUrl}/Users`, userDetail).pipe(
-      catchError(err => {
-        console.log('Error creating user', err);
-        return throwError(err);
-      })
-    );
+    return this.http.post(`${environment.baseUrl}/Users`, userDetail);
   }
 
 
   putUserDetail(userDetail: IUserDetail) {
     userDetail.UserTitleId = +userDetail.UserTitleId;
     userDetail.UserTypeId = +userDetail.UserTypeId;
-    return this.http.put(`${environment.baseUrl}/Users/${userDetail.Id}`, userDetail).pipe(
-      catchError(err => {
-        console.log('Error editing user', err);
-        return throwError(err);
-      })
-    );
+    return this.http.put(`${environment.baseUrl}/Users/${userDetail.Id}`, userDetail);
   }
 
   deleteUserDetail(userId: number) {
-    return this.http.delete(`${environment.baseUrl}/Users/${userId}`).pipe(
-      catchError(err => {
-        console.log('Error deleting user', err);
-        return throwError(err);
-      })
-    );
+    return this.http.delete(`${environment.baseUrl}/Users/${userId}`);
   }
 
   getUserList(): Observable<IUserDetail[] | undefined> {
-    // TODO the error handling should not be done here
-    return this.http.get<IUserDetail[]>(`${environment.baseUrl}/Users`).pipe(
-      catchError(err => {
-        console.log('Error retrieving users list', err);
-        return throwError(err);
-      })
-    );
+    return this.http.get<IUserDetail[]>(`${environment.baseUrl}/Users`);
   }
 
-  getUser(userId: number): Observable<IUserDetail | undefined>{
-    return this.http.get<IUserDetail>(`${environment.baseUrl}/Users/${userId}`).pipe(
-      catchError(err => {
-        console.log('Error retrieving user data', err);
-        return throwError(err);
-      })
-    );
+  getUser(userId: number): Observable<IUserDetail | undefined> {
+    return this.http.get<IUserDetail>(`${environment.baseUrl}/Users/${userId}`);
   }
 
-  getUserTitleList(): Observable<IUserTitle[] | undefined>{
-    return this.http.get<IUserTitle[]>(`${environment.baseUrl}/UserTitles`).pipe(
-      catchError(err => {
-        console.log('Error retrieving user title list', err);
-        return throwError(err);
-      })
-    );
+  getUserTitleList(): Observable<IUserTitle[] | undefined> {
+    return this.http.get<IUserTitle[]>(`${environment.baseUrl}/UserTitles`);
   }
 
-  getUserTypeList(): Observable<IUserType[] | undefined >{
-    return this.http.get<IUserType[]>(`${environment.baseUrl}/UserTypes`).pipe(
-      catchError(err => {
-        console.log('Error retrieving user type list', err);
-        return throwError(err);
-      })
-    );
+  getUserTypeList(): Observable<IUserType[] | undefined> {
+    return this.http.get<IUserType[]>(`${environment.baseUrl}/UserTypes`);
   }
 }

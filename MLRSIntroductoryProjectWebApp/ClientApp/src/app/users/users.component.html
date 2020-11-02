@@ -21,9 +21,9 @@
                   <th>Active</th>
                 </tr>
               </thead>
-<!--              TODO searchText viewUser not found-->
+              <!--              TODO searchText -->
               <tr *ngFor="let ul of users | fullnameFilter: searchText">
-                <td (click)="viewUser(ul)" style="cursor:pointer;color:red">
+                <td style="cursor:pointer;color:red">
                   <a [routerLink]="['/users', ul.Id]">View user details</a>
                 </td>
                 <td>{{ul.Name}}</td>
@@ -36,7 +36,7 @@
                 </td>
                 <td *ngIf="ul.IsActive">
                   <button (click)="onDelete(ul.Id)">
-                  <img src="./assets/images/trash.png" style="width:25px;height:25px">
+                    <img src="./assets/images/trash.png" style="width:25px;height:25px">
                   </button>
                 </td>
               </tr>

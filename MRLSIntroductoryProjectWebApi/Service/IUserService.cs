@@ -1,6 +1,6 @@
-﻿using MLRSIntroductoryWebApi.DTO;
+﻿using Microsoft.AspNetCore.Mvc;
+using MLRSIntroductoryWebApi.DTO;
 using MLRSIntroductoryWebApi.Models;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -34,7 +34,7 @@ namespace MLRSIntroductoryWebApi.Service
         /// Updates the user's data with the specified id.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="userDTO">userDTO</param> TODO xml param names are case sensitive
+        /// <param name="userDto">userDto</param>
         /// <returns>The updated user.</returns>
         /// <exception cref="System.ArgumentOutOfRangeException">id</exception>
         /// <exception cref="System.ArgumentNullException">user</exception>

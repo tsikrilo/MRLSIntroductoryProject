@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MLRSIntroductoryWebApi.Models;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MRLSIntroductoryProjectWebApi.Controllers
 {
@@ -14,10 +15,14 @@ namespace MRLSIntroductoryProjectWebApi.Controllers
 
         public UserTitlesController(UserContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         // GET: api/UserTitles
+        /// <summary>
+        /// Gets the user title.
+        /// </summary>
+        /// <returns>A list of user titles</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserTitle>>> GetUserTitle()
         {
