@@ -1,0 +1,85 @@
+<div class="card">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+  <div class="card-body">
+    <div class="container-fluid">
+      <div class="text-left">
+        <div class="row">
+          <form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">
+            <input type="hidden" name="Id" [value]="userModel.Id">
+            <div class="form-group">
+              <label for="Name">Name</label>
+              <input name="Name" id="Name" #Name="ngModel" [(ngModel)]="userModel.Name"
+                     class="form-control form-control-lg" placeholder="Name" required
+                     [class.invalid]="Name.invalid &#038;&#038; Name.touched">
+            </div>
+            <div class="form-group">
+              <label for="Surname">Surname</label>
+              <input name="Surname" #Surname="ngModel" [(ngModel)]="userModel.Surname"
+                     class="form-control form-control-lg" placeholder="Surname" required
+                     [class.invalid]="Surname.invalid &#038;&#038; Surname.touched">
+            </div>
+            <div class="form-group">
+              <label for="Birthdate">Birthdate</label>
+              <br>
+              <mat-form-field>
+                <input matInput name="Birthdate" #BirthDate="ngModel" [matDatepicker]="picker"
+                       placeholder="Select a date"
+                       [(ngModel)]="userModel.Birthdate"
+                       required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <label for="UserTitleId">User Title</label>
+              <select class="form-control" [(ngModel)]="userModel.UserTitleId"
+                      name="UserTitleId" id="UserTitleId">
+                <option *ngFor="let title of userTitleList" [value]="title.Id">
+                  {{title.Description}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="UserTypeId">User Type</label>
+              <select class="form-control" [(ngModel)]="userModel.UserTypeId"
+                      name="UserTypeId" id="UserTypeId">
+                <option *ngFor="let type of userTypeList" [value]="type.Id">
+                  {{type.Description}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Email address</label>
+              <input name="EmailAddress" #EmailAddress="ngModel" [(ngModel)]="userModel.EmailAddress"
+                     class="form-control form-control-lg" placeholder="email address" required maxlength="50"
+                     [class.invalid]="EmailAddress.invalid &#038;&#038; EmailAddress.touched">
+            </div>
+            <div class="form-group">
+              <label for="Active">Active</label>
+              <input type="checkbox" #Active="ngModel"
+                     [(ngModel)]="userModel.IsActive"
+                     style="margin-left:5%"
+                     name="Active"
+                     id="Active" />
+            </div>
+            <div class="form-group">
+              <div class="col-md-12">
+                <button class="btn btn-info btn-primary" type="submit" *ngIf="userModel.Id > 0"
+                        [disabled]="form.invalid">
+                  Update
+                </button>
+                <button class="btn btn-info btn-primary" type="submit" *ngIf="userModel.Id == 0"
+                        [disabled]="form.invalid">
+                  Insert
+                </button>
+                <button class="btn btn-info btn-primary"  *ngIf="userModel.Id > 0" style="float:left;margin-right:10%" type="button" (click)="resetForm()">Create</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

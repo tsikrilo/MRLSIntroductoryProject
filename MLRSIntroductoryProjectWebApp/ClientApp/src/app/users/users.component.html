@@ -1,0 +1,50 @@
+<div class="card">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+  <div class="card-body">
+    <div class="container-fluid">
+      <div class="text-left">
+
+        <div class="row">
+          <div class="col-md-12">
+            <input type="text" class="form-control" id="search-text"
+                   aria-describedby="search-text" [(ngModel)]="searchText"
+                   placeholder="Enter full name of user" autofocus>
+            <br>
+            <table class="table">
+              <thead class="thead-light">
+                <tr>
+                  <th>Action</th>
+                  <th>Name</th>
+                  <th>Surname</th>
+                  <th>Active</th>
+                </tr>
+              </thead>
+              <tr *ngFor="let ul of users | fullnameFilter: searchText">
+                <td (click)="viewUser(ul)" style="cursor:pointer;color:red">
+                  <a [routerLink]="['/users', ul.Id]">View user details</a>
+                </td>
+                <td>{{ul.Name}}</td>
+                <td>{{ul.Surname}}</td>
+                <td *ngIf="ul.IsActive">
+                  <img src="./assets/images/active-small.png" style="width:25px;height:25px">
+                </td>
+                <td *ngIf="!ul.IsActive">
+                  <img src="./assets/images/deny.png" style="width:25px;height:25px">
+                </td>
+                <td *ngIf="ul.IsActive">
+                  <button (click)="onDelete(ul.Id)">
+                  <img src="./assets/images/trash.png" style="width:25px;height:25px">
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

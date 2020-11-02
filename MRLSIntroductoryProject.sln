@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRLSIntroductoryProjectWebApi", "MRLSIntroductoryProjectWebApi\MRLSIntroductoryProjectWebApi.csproj", "{6E6631DA-07A0-46BF-A773-32C63503E936}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLRSIntroductoryProjectWebApp", "MLRSIntroductoryProjectWebApp\MLRSIntroductoryProjectWebApp.csproj", "{5146B9A4-8FAB-41E3-B51C-6380B1142FE6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLRSIntroductoryProjectUnitTests", "MLRSIntroductoryProjectUnitTests\MLRSIntroductoryProjectUnitTests.csproj", "{20D4BDAA-3584-4425-B1DC-B547DD208EAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{6E6631DA-07A0-46BF-A773-32C63503E936}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E6631DA-07A0-46BF-A773-32C63503E936}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E6631DA-07A0-46BF-A773-32C63503E936}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5146B9A4-8FAB-41E3-B51C-6380B1142FE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5146B9A4-8FAB-41E3-B51C-6380B1142FE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5146B9A4-8FAB-41E3-B51C-6380B1142FE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5146B9A4-8FAB-41E3-B51C-6380B1142FE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20D4BDAA-3584-4425-B1DC-B547DD208EAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20D4BDAA-3584-4425-B1DC-B547DD208EAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20D4BDAA-3584-4425-B1DC-B547DD208EAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20D4BDAA-3584-4425-B1DC-B547DD208EAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

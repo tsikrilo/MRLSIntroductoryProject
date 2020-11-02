@@ -1,0 +1,3 @@
+2020-11-02T10:33:54.0344818+02:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-02T10:33:54.0448030+02:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-02T10:33:54.0450311+02:00  [INF] Content root path: "C:\Users\ktsik\source\repos\MRLSIntroductoryProject\MRLSIntroductoryProjectWebApi" (b5d60022)
